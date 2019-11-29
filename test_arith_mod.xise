@@ -1,0 +1,29 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity test_arith_mod is
+    Port ( a,b : in  STD_logic_vector(3 downto 0);
+           c : in  STD_LOGIC;
+           s : in  STD_LOGIC_vector(4 downto 0);
+           y : out  STD_LOGIC_vector(3 downto 0));
+end test_arith_mod;
+
+architecture Behavioral of test_arith_mod is
+begin
+	process(a,b,c,s)
+	begin
+	if(c='0') then
+	 case s is
+			when "00000"=> y<=a;
+			when "00001"=> y<=a+b;
+			when "00011"=> y<=a-1;
+			when others=> y<= "0000";
+			end case;
+		elsif(s="00000") then y<=a+1;
+		else y<= "0000";
+		end if;
+	end process;
+end Behavioral;
