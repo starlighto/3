@@ -1,0 +1,26 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity test_and_tb is
+end test_and_tb;
+
+architecture Behavioral of test_and_tb is
+	component test_main_mod
+	port(a,b	:	in std_logic_vector(3 downto 0);
+			c	:	in	std_logic;
+			s	:	in	std_logic_vector(4 downto 0);
+			y	:	out	std_logic_vector(3 downto 0));
+	end component;
+	
+	signal a,b	:	std_logic_vector(3 downto 0);
+	signal	c	:	std_logic;
+	signal	s	:	std_logic_vector(4 downto 0);
+	signal 	y	:	std_logic_vector(3 downto 0);
+begin
+		main	:	test_main_mod	port map(a,b,c,s,y);
+		s	<=	"00100";
+		c	<=	'0';
+		a	<=	"0101";
+		b	<=	"1001";
+
+end Behavioral;
