@@ -1,0 +1,45 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_SIGNED.ALL;
+
+entity test_shift_mod is
+    Port ( a,b : in  STD_logic_vector(3 downto 0);
+           c : in  STD_LOGIC;
+           s : in  STD_LOGIC_vector(4 downto 0);
+           y : out  STD_LOGIC_vector(3 downto 0));
+end test_shift_mod;
+
+architecture Behavioral of test_shift_mod is
+	procedure left(a	:	in std_logic_vector(3 downto 0); signal b:out std_logic_vector(3 downto 0))is
+				variable l_new:std_logic_vector(3 downto 0);
+				begin
+				l_new(3 downto 1) :=a(2 downto 0);
+				l_new(0):='0';
+				b<=l_new;
+	end procedure;
+	procedure right(a	:	in std_logic_vector(3 downto 0); signal b:out std_logic_vector(3 downto 0))is
+				variable r_new:std_logic_vector(3 downto 0);
+				begin
+				r_new(2 downto 0) :=a(3 downto 1);
+				r_new(3):='0';
+				b<=r_new;
+	end procedure;
+signal sl,sr:std_logic_vector (3 downto 0);
+
+begin
+	left(a,sl);
+	right(a,sr);
+	process(a,b,c,s,sl,sr)
+	begin
+		if(c='0')then
+			case s is
+				when "00000"=> y <= a;
+				when "01000"=> y <= sl;
+				when "10000"=> y <= sr;
+				when "11000"=> y<= "0000";
+				when others=>  y<= "0000";
+				end case;
+		else y<= "0000";
+		end if;
+	end process;
+end Behavioral;
