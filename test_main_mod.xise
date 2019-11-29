@@ -1,0 +1,50 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity test_main_mod is
+	port(a,b	:	in std_logic_vector(3 downto 0):="0000";
+			c	:	in std_logic;
+			s	:	in std_logic_vector(4 downto 0);
+			y	:	out std_logic_vector(3 downto 0):="0000");
+end test_main_mod;
+
+architecture Behavioral of test_main_mod is
+	component test_arith_mod
+	port(a,b	:	in std_logic_vector(3 downto 0):="0000";
+			c	:	in std_logic;
+			s	:	in std_logic_vector(4 downto 0);
+			y	:	out std_logic_vector(3 downto 0):="0000");
+	end component;
+	
+	component test_logic_mod
+	port(a,b	:	in std_logic_vector(3 downto 0):="0000";
+			c	:	in std_logic;
+			s	:	in std_logic_vector(4 downto 0);
+			y	:	out std_logic_vector(3 downto 0):="0000");
+	end component;
+	component test_shift_mod
+	port(a,b	:	in std_logic_vector(3 downto 0):="0000";
+			c	:	in std_logic;
+			s	:	in std_logic_vector(4 downto 0);
+			y	:	out std_logic_vector(3 downto 0):="0000");
+	end component;
+	
+	signal ari,log,shi	:	std_logic_vector(3 downto 0);
+	
+begin
+	arith	:	test_arith_mod port map(a,b,c,s,ari);
+	logic	:	test_logic_mod port map(a,b,c,s,log);
+	shift	:	test_shift_mod	port map(a,b,c,s,shi);
+	
+	process(ari,log,shi,s)
+	begin
+	case s(4 downto 2) is
+		when "000"	=>	y	<=ari;
+		when "001" 	=>	y	<=log;
+		when others	=>	y	<=shi;
+	end case;
+	end process;
+	
+end Behavioral;
